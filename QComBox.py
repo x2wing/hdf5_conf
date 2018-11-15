@@ -4,6 +4,7 @@
 import sys
 from PyQt5.QtWidgets import (QWidget, QLabel,
                              QComboBox, QApplication, QPushButton, QFileDialog)
+from PyQt5 import QtCore
 
 
 class Example(QWidget):
@@ -14,8 +15,8 @@ class Example(QWidget):
         self.lbl = QLabel("Ubuntu", self)
 
         self.combo = QComboBox(self)
-        data = {'file_paths': [r'e:\temp\README.txt', r'e:\профиль\t.hdf5', r'e:\профиль\тест.hdf5']}
-        self.combo.addItems(data['file_paths'])
+        # data = {'file_paths': [r'e:\temp\README.txt', r'e:\профиль\t.hdf5', r'e:\профиль\тест.hdf5']}
+        # self.combo.addItems(data['file_paths'])
         self.combo.setGeometry(0, 0, 200, 50)
         btn_save = QPushButton("Save", self)
         btn_save.setGeometry(0, 60, 60, 30)
@@ -34,11 +35,14 @@ class Example(QWidget):
 
         self.setGeometry(300, 300, 500, 300)
         self.setWindowTitle('QComboBox')
+        self.setWindowFlags(QtCore.Qt.Widget|QtCore.Qt.MSWindowsFixedSizeDialogHint)
         self.show()
 
     def save_file(self):
+        description = 'Таблица hdf5'
+        default_path = r'e:\temp'
         filter = "Таблицы hdf5  (*.hdf5)"
-        dialog = QFileDialog.getSaveFileName(self, 'Таблица hdf5', r'e:\temp', filter)
+        dialog = QFileDialog.getSaveFileName(self, description, default_path, filter)
         self.combo.addItem(dialog[0])
 
     def load_file(self):
